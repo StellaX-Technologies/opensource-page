@@ -1,0 +1,20 @@
+# This file helps generate a sponsor button for your repository
+
+# Funding via GitHub Sponsors
+# Replace 'your-github-username' with your username
+github: [your-github-username]
+
+# You can add additional funding platforms below (remove '#' to enable)
+# Patreon: 
+# patreon: your-patreon-username
+
+# Open Collective:
+# open_collective: your-open-collective-username
+
+# Ko-fi:
+# ko_fi: your-ko-fi-username
+
+# Custom funding URLs (up to 4)
+# custom:
+#   - 'https://link1.com'
+#   - 'https://link2.com'
