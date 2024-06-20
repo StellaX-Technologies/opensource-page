@@ -1,41 +1,40 @@
-<?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+<php
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $to = 'aeroastro_vzg@gitam.in';
+  $name = htmlspecialchars($_POST["name"]);
+  $from = htmlspecialchars($_POST["email"]);
+  $subject = htmlspecialchars($_POST["subject"]);
+  $message = htmlspecialchars($_POST["message"]);
+  $sent = False;
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
-
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
+  if(empty($from)) {
+    $email_err = "Email is required"
+  }
+  if(empty($name)) {
+    $name_err = "Name is required"
+  }
+  if(empty($from)) {
+    $subject_err = "Subject is required"
+  }
+  if(empty($from)) {
+    $message_err = "Message is required"
   }
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+  if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+    $name_err = "Only letters and white space allowed";
+  }
+  if(!filter_val($email, FILTER_VALIDATE_EMAIL)) {
+    $email_err = "Invalid email format";
+  }
+  if (!preg_match("/^[a-zA-Z-' ]*$/",$subject)) {
+    $subject_err = "Only letters and white space allowed";
+  }
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+  if(empty($name_err) and empty($email_err) and empty($subject_err) and empty($message_err)) {
+    $headers = "From: $from" . "\r\n" . "CC: parthiv.sk.pedapati@gmail.com";
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
+    mail($to, $subject, $message, $headers);
+    $sent = True;
+  }
+}
 ?>
